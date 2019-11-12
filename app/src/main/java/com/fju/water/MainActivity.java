@@ -1,5 +1,6 @@
 package com.fju.water;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,17 +14,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText edMonthly;
+    private EditText edNext;
+    private float degree;
+    private float fee = 0;
 
-
-
-    private int degree;
-    private double cost;
-    private EditText month;
-    private EditText next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,53 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        month = findViewById(R.id.month);
-        next = findViewById(R.id.next);
+        edMonthly = findViewById(R.id.month);
+        edNext = findViewById(R.id.next);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String monthString = edMonthly.getText().toString();
+                if (!TextUtils.isEmpty(monthString)) {
+                    degree = Float.parseFloat(monthString);
+                    if (degree >= 1 && degree <= 10) {
+                        fee = degree * 7.35f;
+                    } else if (degree >= 11 && degree <= 30) {
+                        fee = degree * 9.45f - 21;
+                    } else if (degree >= 31 && degree <= 50) {
+                        fee = degree * 11.55f - 84;
+                    } else if (degree > 51) {
+                        fee = degree * 12.075f - 110.25f;
+                    }
+                    Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                    startActivity(intent);
+//            new AlertDialog.Builder(this)
+//                    .setTitle("本月抄表費用")
+//                    .setMessage("費用" + fee)
+//                    .setPositiveButton("OK", null)
+//                    .show();
+                } else {
+                    String nextString = edNext.getText().toString();
+                    if (!TextUtils.isEmpty(nextString)) {
+                        float degree = Float.parseFloat(nextString);
+                        if (degree >= 1 && degree <= 20) {
+                            fee = degree * 7.35f;
+                        } else if (degree >= 21 && degree <= 60) {
+                            fee = degree * 9.45f - 42;
+                        } else if (degree >= 61 && degree <= 100) {
+                            fee = degree * 11.55f - 168;
+                        } else
+                            fee = degree * 12.075f - 220.5f;
+                    }
+//            new AlertDialog.Builder(this)
+//                    .setTitle("隔月抄表費用")
+//                    .setMessage("費用" + fee)
+//                    .setPositiveButton("OK", null)
+//                    .show();
+                }
+
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,54 +88,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//
-    public void monthly() {
-        degree = Integer.parseInt(month.getText().toString());
-        if (degree > 0 && degree < 10) {
-            cost = degree * 7.35;
-        } else if (degree > 10 && degree <= 30) {
-            cost = (degree * 9.45) - 21;
-        }
-        if (degree > 30 && degree <= 50) {
-            cost = (degree * 11.55) - 84;
-        } else {
-            cost = (degree * 12.075) - 110.25;
-        }
+
+    public void caculation (View view) {
+
     }
-    public void next() {
-        degree = Integer.parseInt(month.getText().toString());
-        if (degree > 0 && degree < 20) {
-            cost = degree * 7.35;
-        } else if (degree > 20 && degree < 60) {
-            cost = (degree * 9.45) - 42;
-        }
-        if (degree > 60 && degree <= 100) {
-            cost = (degree * 11.55) - 168;
-        } else {
-            cost = (degree * 12.075) - 220.5;
-        }
-    }
-    public void caculation (View view){
-        month.setText(month + "");
 
-        if(TextUtils.isEmpty(month)){
-            next();
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("隔月抄表費用")
-                    .setMessage(""+cost+"元")
-                    .setPositiveButton("ok",null)
-                    .show();
 
-        }else{
-            monthly();
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("本月抄表費用")
-                    .setMessage(""+cost+"元")
-                    .setPositiveButton("ok",null)
-                    .show();
-        }
-
-        }
 
 
 
