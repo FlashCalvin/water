@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                         fee = degree * 12.075f - 110.25f;
                     }
                     Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                    intent.putExtra("Fee",fee);
                     startActivity(intent);
 //            new AlertDialog.Builder(this)
 //                    .setTitle("本月抄表費用")
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void caculation (View view) {
+    public void caculation () {
 
     }
 
