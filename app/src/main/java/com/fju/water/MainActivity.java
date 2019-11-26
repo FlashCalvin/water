@@ -50,26 +50,26 @@ public class MainActivity extends AppCompatActivity {
                         fee = degree * 12.075f - 110.25f;
                     }
                     Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-                    intent.putExtra("Fee",fee);
+                    intent.putExtra(getString(R.string.fee),fee);
                     startActivity(intent);
 //            new AlertDialog.Builder(this)
 //                    .setTitle("本月抄表費用")
 //                    .setMessage("費用" + fee)
 //                    .setPositiveButton("OK", null)
 //                    .show();
-                } else {
-                    String nextString = edNext.getText().toString();
-                    if (!TextUtils.isEmpty(nextString)) {
-                        float degree = Float.parseFloat(nextString);
-                        if (degree >= 1 && degree <= 20) {
-                            fee = degree * 7.35f;
-                        } else if (degree >= 21 && degree <= 60) {
-                            fee = degree * 9.45f - 42;
-                        } else if (degree >= 61 && degree <= 100) {
-                            fee = degree * 11.55f - 168;
-                        } else
-                            fee = degree * 12.075f - 220.5f;
-                    }
+//                } else {
+//                    String nextString = edNext.getText().toString();
+//                    if (!TextUtils.isEmpty(nextString)) {
+//                        float degree = Float.parseFloat(nextString);
+//                        if (degree >= 1 && degree <= 20) {
+//                            fee = degree * 7.35f;
+//                        } else if (degree >= 21 && degree <= 60) {
+//                            fee = degree * 9.45f - 42;
+//                        } else if (degree >= 61 && degree <= 100) {
+//                            fee = degree * 11.55f - 168;
+//                        } else
+//                            fee = degree * 12.075f - 220.5f;
+//                    }
 //            new AlertDialog.Builder(this)
 //                    .setTitle("隔月抄表費用")
 //                    .setMessage("費用" + fee)
