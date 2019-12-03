@@ -11,18 +11,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG =MainActivity.class.getSimpleName() ;
     private EditText edMonthly;
-    private EditText edNext;
+//    private EditText edNext;
     private float degree;
     private float fee = 0;
     boolean isNext = false;
@@ -86,11 +90,25 @@ public class MainActivity extends AppCompatActivity {
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isNext = isChecked;
+                isNext = isChecked;TextView text = findViewById(R.id.type);
+                text.setText(isNext ? getString(R.string.every_other_month): getString(R.string.this_month));
             }
         });
+        Spinner cities = findViewById(R.id.spinner);
+        cities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                             @Override
+                                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                 Log.d(TAG,getResources().getStringArray(R.array.cities)[position]);
+                                             }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+                                             @Override
+                                             public void onNothingSelected(AdapterView<?> parent) {
+
+                                             }
+                                         });
+
+
+                FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,9 +122,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy");
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"onResume");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause");
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
